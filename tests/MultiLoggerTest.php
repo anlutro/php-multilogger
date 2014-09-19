@@ -44,4 +44,16 @@ class MultiLoggerTest extends PHPUnit_Framework_TestCase
 		$mock->shouldReceive('debug')->with('message')->once();
 		$log->to('specific')->debug('message');
 	}
+
+	/** @test */
+	public function deferredChannels()
+	{
+		$log = $this->makeMulti();
+		$log->setDeferredChannel('default', function() {
+			$mock = $this->getMockLogger();
+			$mock->shouldReceive('log')->with(LogLevel::DEBUG, 'message', [])->once();
+			return $mock;
+		});
+		$log->debug('message');
+	}
 }

@@ -74,7 +74,7 @@ class MultiLogger extends AbstractLogger implements LoggerInterface
 	 */
 	public function setDeferredChannel($channel, Closure $callback)
 	{
-		$this->channels[$channel] = $logger;
+		$this->channels[$channel] = $callback();
 	}
 
 	/**
